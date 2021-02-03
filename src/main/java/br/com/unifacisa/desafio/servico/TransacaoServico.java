@@ -24,11 +24,11 @@ public class TransacaoServico {
         return lista;
     }
 
-
     public Transacao depositar(Transacao transacao) {
         Conta conta = validarContaCadastrada(transacao.getConta());
 
-        conta.setSaldo(transacao.getValor());
+        Double novoSaldo = conta.getSaldo() + transacao.getValor();
+        conta.setSaldo(novoSaldo);
         contaServico.salvar(conta);
 
         return transacaoRepositorio.save(transacao);
@@ -37,18 +37,26 @@ public class TransacaoServico {
     public Transacao sacar(Transacao transacao) {
         Conta conta = validarContaCadastrada(transacao.getConta());
 
-        if(conta.getLimiteSaqueDiario() - transacao.getValor() < 0)
+        if (conta.getLimiteSaqueDiario() - transacao.getValor() < 0)
             throw new RuntimeException("O valor excede o limite diário para saques!");
 
-        if(conta.getSaldo() - transacao.getValor() < 0)
+        if (conta.getSaldo() - transacao.getValor() < 0)
             throw new RuntimeException("A conta não possui saldo suficiente para o saque!");
 
-        conta.setLimiteSaqueDiario(transacao.getValor());
+        Double novoLimiteSaque = conta.getLimiteSaqueDiario() - transacao.getValor();
+        conta.setLimiteSaqueDiario(novoLimiteSaque);
 
-        conta.setSaldo(-transacao.getValor());
+        Double novoSaldo = conta.getSaldo() - transacao.getValor();
+        conta.setSaldo(novoSaldo);
+
         contaServico.salvar(conta);
 
         return transacaoRepositorio.save(transacao);
+    }
+
+    public List<Transacao> gerarExtrato(Integer idConta) {
+        Conta conta = contaServico.obterPorId(idConta);
+        return transacaoRepositorio.findByConta(conta);
     }
 
     private Conta validarContaCadastrada(Conta conta) {

@@ -3,8 +3,10 @@ package br.com.unifacisa.desafio.dominio;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -16,10 +18,10 @@ public class Conta implements Serializable {
     private Integer idConta;
 
     @Column(name = "saldo")
-    private Double saldo;
+    private Double saldo = 0.0;
 
     @Column(name = "limite_saque_diario")
-    private Double limiteSaqueDiario;
+    private Double limiteSaqueDiario = 0.0;
 
     @Column(name = "flag_ativo")
     private Boolean flagAtivo;
@@ -30,6 +32,7 @@ public class Conta implements Serializable {
     @Column(name = "data_criacao")
     private LocalDate dataCriacao;
 
+    @NotNull(message = "A pessoa não pode ser nula")
     @ManyToOne
     @JoinColumn(name = "id_pessoa")
     private Pessoa pessoa;
@@ -47,7 +50,7 @@ public class Conta implements Serializable {
     }
 
     public void setSaldo(Double saldo) {
-        this.saldo += saldo;
+        this.saldo = saldo;
     }
 
     public Double getLimiteSaqueDiario() {
@@ -55,7 +58,7 @@ public class Conta implements Serializable {
     }
 
     public void setLimiteSaqueDiario(Double limiteSaqueDiario) {
-        this.limiteSaqueDiario -= limiteSaqueDiario;
+        this.limiteSaqueDiario = limiteSaqueDiario;
     }
 
     public Boolean getFlagAtivo() {
@@ -79,7 +82,7 @@ public class Conta implements Serializable {
     }
 
     public void setDataCriacao(LocalDate dataCriacao) {
-        this.dataCriacao = dataCriacao;
+        this.dataCriacao = LocalDate.now();
     }
 
     public Pessoa getPessoa() {

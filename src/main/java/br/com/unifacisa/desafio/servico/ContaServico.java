@@ -23,6 +23,17 @@ public class ContaServico {
         return contaRepositorio.save(conta);
     }
 
+    public Conta bloquearConta(Integer id) {
+        Conta conta = obterPorId(id);
+
+        if (!conta.getFlagAtivo())
+            throw new RuntimeException("A conta já está bloqueada!");
+
+        conta.setFlagAtivo(false);
+
+        return salvar(conta);
+    }
+
     public Conta obterPorId(Integer id) {
         return contaRepositorio.findById(id)
                 .orElseThrow(() -> new RuntimeException("Conta não cadastrada!"));

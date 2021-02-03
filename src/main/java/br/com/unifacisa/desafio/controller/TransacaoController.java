@@ -35,4 +35,10 @@ public class TransacaoController {
         Transacao transacaoAux = transacaoServico.sacar(transacao);
         return ResponseEntity.ok(transacaoAux);
     }
+
+    @GetMapping("/extrato/{idConta}")
+    public ResponseEntity<List<Transacao>> gerarExtratoTransacoes(@PathVariable Integer idConta) throws Exception {
+        List<Transacao> lista = transacaoServico.gerarExtrato(idConta);
+        return new ResponseEntity<>(lista, HttpStatus.OK);
+    }
 }

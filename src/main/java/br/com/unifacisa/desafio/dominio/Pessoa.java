@@ -1,6 +1,8 @@
 package br.com.unifacisa.desafio.dominio;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -13,12 +15,17 @@ public class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPessoa;
 
+    @NotNull(message = "O Nome não pode ser nulo")
+    @NotEmpty(message = "O Nome não pode ser vazio")
     @Column(name = "nome")
     private String nome;
 
+    @NotNull(message = "O Cpf não pode ser nulo")
+    @NotEmpty(message = "O Cpf não pode ser vazio")
     @Column(name = "cpf")
     private String cpf;
 
+    @NotNull(message = "a data de nascimento não pode ser nula")
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 

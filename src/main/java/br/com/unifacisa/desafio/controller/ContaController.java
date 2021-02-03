@@ -23,9 +23,21 @@ public class ContaController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<String> consultarSaldo(@PathVariable Integer id) {
+        Conta conta = contaServico.obterPorId(id);
+        return ResponseEntity.ok("O saldo da conta é R$ ".concat(conta.getSaldo().toString()));
+    }
+
     @PostMapping
     public ResponseEntity<Conta> salvar(@RequestBody Conta conta) throws Exception {
         contaServico.salvar(conta);
         return ResponseEntity.created(new URI("/api/contas")).build();
+    }
+
+    @PutMapping("/bloquear-conta/{id}")
+    public ResponseEntity<Conta> bloquearConta(@PathVariable Integer id) {
+        Conta conta = contaServico.bloquearConta(id);
+        return ResponseEntity.ok(conta);
     }
 }

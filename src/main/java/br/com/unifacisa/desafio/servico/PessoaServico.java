@@ -2,8 +2,6 @@ package br.com.unifacisa.desafio.servico;
 
 import br.com.unifacisa.desafio.dominio.Pessoa;
 import br.com.unifacisa.desafio.repositorio.PessoaRepositorio;
-import br.com.unifacisa.desafio.servico.dto.PessoaDTO;
-import br.com.unifacisa.desafio.servico.mapper.PessoaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +13,13 @@ public class PessoaServico {
     @Autowired
     private PessoaRepositorio pessoaRepositorio;
 
-    @Autowired
-    private PessoaMapper pessoaMapper;
 
-    public List<PessoaDTO> listar() {
+    public List<Pessoa> listar() {
         List<Pessoa> lista = pessoaRepositorio.findAll();
-        return pessoaMapper.toDto(lista);
+        return lista;
     }
 
-    public Pessoa salvar(PessoaDTO pessoaDTO) {
-        Pessoa pessoa = pessoaMapper.toEntity(pessoaDTO);
-
+    public Pessoa salvar(Pessoa pessoa) {
         validarCpf(pessoa);
 
         Pessoa pessoaAux = pessoaRepositorio.save(pessoa);
@@ -35,7 +29,7 @@ public class PessoaServico {
     private void validarCpf(Pessoa pessoa) {
         Pessoa pessoaAux = pessoaRepositorio.findByCpf(pessoa.getCpf());
 
-        if(pessoaAux != null)
+        if (pessoaAux != null)
             throw new RuntimeException("CPF já cadastrado na base");
     }
 

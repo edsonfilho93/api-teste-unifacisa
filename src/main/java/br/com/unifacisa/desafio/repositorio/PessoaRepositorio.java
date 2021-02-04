@@ -4,10 +4,7 @@ import br.com.unifacisa.desafio.dominio.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
-
 @Repository
-@Transactional
 public interface PessoaRepositorio extends JpaRepository<Pessoa, Integer> {
 
     Pessoa findByCpf(String cpf);

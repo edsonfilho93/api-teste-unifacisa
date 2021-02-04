@@ -1,6 +1,5 @@
 package br.com.unifacisa.desafio.controller;
 
-import br.com.unifacisa.desafio.dominio.Conta;
 import br.com.unifacisa.desafio.dominio.Transacao;
 import br.com.unifacisa.desafio.servico.TransacaoServico;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController

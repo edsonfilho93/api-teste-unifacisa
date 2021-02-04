@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -16,6 +18,7 @@ public class Transacao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTransacao;
 
+    @NotNull(message = "Conta não pode ser nulo")
     @ManyToOne
     @JoinColumn(name = "id_conta")
     private Conta conta;
@@ -55,6 +58,6 @@ public class Transacao implements Serializable {
     }
 
     public void setDataTransacao(LocalDate dataTransacao) {
-        this.dataTransacao = dataTransacao;
+        this.dataTransacao = LocalDate.now();
     }
 }

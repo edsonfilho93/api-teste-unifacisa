@@ -23,7 +23,7 @@ public class ContaController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/consultar-saldo/{id}")
     public ResponseEntity<String> consultarSaldo(@PathVariable Integer id) {
         Conta conta = contaServico.obterPorId(id);
         return ResponseEntity.ok("O saldo da conta é R$ ".concat(conta.getSaldo().toString()));

@@ -22,13 +22,13 @@ public class TransacaoController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    @PutMapping("/depositar")
+    @PostMapping("/depositar")
     public ResponseEntity<Transacao> depositar(@RequestBody Transacao transacao) throws Exception {
         Transacao transacaoAux = transacaoServico.depositar(transacao);
         return ResponseEntity.ok(transacaoAux);
     }
 
-    @PutMapping("/sacar")
+    @PostMapping("/sacar")
     public ResponseEntity<Transacao> sacar(@RequestBody Transacao transacao) throws Exception {
         Transacao transacaoAux = transacaoServico.sacar(transacao);
         return ResponseEntity.ok(transacaoAux);

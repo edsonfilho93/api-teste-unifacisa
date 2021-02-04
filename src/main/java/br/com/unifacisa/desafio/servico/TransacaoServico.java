@@ -29,6 +29,7 @@ public class TransacaoServico {
 
         Double novoSaldo = conta.getSaldo() + transacao.getValor();
         conta.setSaldo(novoSaldo);
+
         contaServico.salvar(conta);
 
         return transacaoRepositorio.save(transacao);
